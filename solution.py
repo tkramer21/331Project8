@@ -1,6 +1,6 @@
 """
 Project 8 - Heaps - Solution Code
-CSE 331 Fall2022
+CSE 331 Fall 2022
 Onsay
 """
 
