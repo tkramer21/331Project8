@@ -63,68 +63,131 @@ class MinHeap:
 
     def __len__(self) -> int:
         """
-        INSERT DOCSTRING HERE
+
+        :return:
         """
-        pass
+        if self.data is not None:
+            return len(self.data)
 
     def empty(self) -> bool:
         """
-        INSERT DOCSTRING HERE
+
+        :return:
         """
-        pass
+        if len(self.data) == 0:
+            return True
+
+        return False
 
     def top(self) -> T:
         """
-        INSERT DOCSTRING HERE
+
+        :return:
         """
-        pass
+        if not self.empty():
+            return self.data[0]
 
     def get_left_child_index(self, index: int) -> int:
         """
-        INSERT DOCSTRING HERE
+
+        :param index:
+        :return:
         """
-        pass
+        if 2 * index + 1 < len(self.data):
+            return 2 * index + 1
 
     def get_right_child_index(self, index: int) -> int:
         """
-        INSERT DOCSTRING HERE
+
+        :param index:
+        :return:
         """
-        pass
+        if 2 * index + 2 < len(self.data):
+            return 2 * index + 2
 
     def get_parent_index(self, index: int) -> int:
         """
-        INSERT DOCSTRING HERE
+
+        :param index:
+        :return:
         """
-        pass
+        if (index - 1) // 2 >= 0:
+            return (index - 1) // 2
 
     def get_min_child_index(self, index: int) -> int:
         """
-        INSERT DOCSTRING HERE
+
+        :param index:
+        :return:
         """
-        pass
+        if not self.empty():
+            lc = self.get_left_child_index(index)
+            rc = self.get_right_child_index(index)
+
+            if lc is None and rc is None:  # no children
+                return None
+
+            if lc is not None and rc is not None:  # both children
+                if self.data[lc] < self.data[rc]:
+                    return lc
+                elif self.data[lc] >= self.data[rc]:
+                    return rc
+
+            if lc is not None and rc is None:  # only left child
+                return lc
 
     def percolate_up(self, index: int) -> None:
         """
-        INSERT DOCSTRING HERE
+
+        :param index:
+        :return:
         """
-        pass
+        if index > 0:
+            par = self.get_parent_index(index)
+            if self.data[index] <= self.data[par]:
+                self.data[index], self.data[par] = self.data[par], self.data[index]
+                self.percolate_up(par)
+
     def percolate_down(self, index: int) -> None:
         """
-        INSERT DOCSTRING HERE
+
+        :param index:
+        :return:
         """
-        pass
+        lc = self.get_left_child_index(index)
+        rc = self.get_right_child_index(index)
+        if lc is not None:
+            small = lc
+            if rc is not None:
+                if self.data[rc] < self.data[lc]:
+                    small = rc
+            if self.data[index] >= self.data[small]:
+                self.data[index], self.data[small] = self.data[small], self.data[index]
+                self.percolate_down(small)
 
     def push(self, val: T) -> None:
         """
-        INSERT DOCSTRING HERE
+
+        :param val:
+        :return:
         """
-        pass
+        end = len(self.data)
+        self.data.append(val)
+        self.percolate_up(end)
 
     def pop(self) -> T:
         """
         INSERT DOCSTRING HERE
         """
-        pass
+        if not self.empty():
+            val = self.data[0]
+            if min is not None:
+                self.data[0], self.data[len(self.data) - 1] = self.data[len(self.data) - 1], self.data[0]
+                self.data.remove(val)
+                self.percolate_down(0)
+                return val
+            self.data.remove(val)
+            return val
 
 
 class MaxHeap:
@@ -166,9 +229,13 @@ class MaxHeap:
 
     def empty(self) -> bool:
         """
-        INSERT DOCSTRING HERE
+        Checks to see if heap is empty
+
+        :return: A boolean True if heap is empty, False otherwise
         """
-        pass
+        if len(self.data) == 0:
+            return True
+        return False
 
     def top(self) -> int:
         """
