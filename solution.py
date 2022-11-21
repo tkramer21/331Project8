@@ -233,27 +233,28 @@ class MaxHeap:
 
         :return: A boolean True if heap is empty, False otherwise
         """
-        if len(self.data) == 0:
-            return True
-        return False
+        return self.data.data.empty()
 
     def top(self) -> int:
         """
-        INSERT DOCSTRING HERE
+        Gets the max value of the heap
+
+        :return: The top value of the heap
         """
-        pass
+        if not self.data.empty():
+            return -1 * self.data.data[0]
 
     def push(self, key: int) -> None:
         """
         INSERT DOCSTRING HERE
         """
-        pass
+        return self.data.push(-1 * key)
 
     def pop(self) -> int:
         """
         INSERT DOCSTRING HERE
         """
-        pass
+        return -1 * self.data.pop()
 
 
 def get_eating_times(values: List[List[List[int]]]) -> List[List[int]]:
