@@ -239,6 +239,15 @@ class TestProject08(unittest.TestCase):
             if heap.get_right_child_index(i):
                 self.assertLessEqual(heap.data[i], heap.data[heap.get_right_child_index(i)])  # (4)
 
+        heap = MinHeap()
+        heap.push([4, 8])
+        heap.push([1, 2])
+        heap.push([2, 4])
+        heap.push([2, 5])
+        heap.push([3, 7])
+
+        self.assertEqual(5, len(heap.data))
+
     def test_pop_minheap(self):
         """
         pop cases, requires functioning accessors and percolates

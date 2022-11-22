@@ -261,4 +261,46 @@ def get_eating_times(values: List[List[List[int]]]) -> List[List[int]]:
     """
     INSERT DOCSTRING HERE
     """
-    pass
+    vic = []
+    sol = []
+    i = 0
+    j = 0
+
+    if len(values) > 0:
+        while i < len(values):
+            temp = values[i][0]
+            j = 0
+            while j < len(values[i]) - 1:
+
+                if temp[1] >= values[i][j + 1][0]:
+                    if temp[1] >= values[i][j + 1][1]:
+                        j += 1
+                        continue
+                    temp = [temp[0], values[i][j + 1][1]]
+                else:
+                    vic.append(values[i][j])
+                    vic.append(values[i][j + 1])
+                #  else:
+                #     temp = [temp[1], values[i][j + 1][0]]
+
+                j += 1
+            if len(vic) > 0 and len(temp) > 0 and vic[len(vic) - 1][1] >= temp[0]:
+                if vic[len(vic) - 1][1] < temp[1]:
+                    vic[len(vic) - 1] = [vic[len(vic) - 1][0], temp[1]]
+                # elif vic[len(vic) - 1][0] < temp[1]:
+                #   vic[len(vic) - 1] = [temp[1], vic[len(vic) - 1][1]]
+            elif temp != []:
+                vic.append(temp)
+            i += 1
+
+        i = 0
+        while i < len(vic) - 1:
+            if vic[i][1] <= vic[i + 1][0]:
+                sol.append([vic[i][1], vic[i + 1][0]])
+            i += 1
+
+    return sol
+
+
+"""                if values[i][j][1] >= values[i][j + 1][1]: # if the second time interval is 
+                    temp = [values[i][j][0], values[i][j][1]]"""
