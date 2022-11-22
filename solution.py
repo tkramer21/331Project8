@@ -63,16 +63,18 @@ class MinHeap:
 
     def __len__(self) -> int:
         """
+        Determines the length of the min heap
 
-        :return:
+        :return: an int representing the size of the heap
         """
         if self.data is not None:
             return len(self.data)
 
     def empty(self) -> bool:
         """
+        Determines if the min heap is empty
 
-        :return:
+        :return:a boolean true if the min heap has no elements, False otherwise
         """
         if len(self.data) == 0:
             return True
@@ -81,44 +83,49 @@ class MinHeap:
 
     def top(self) -> T:
         """
+        Finds the top or min value of the min heap
 
-        :return:
+        :return: an object, the minimum value of the min heap
         """
         if not self.empty():
             return self.data[0]
 
     def get_left_child_index(self, index: int) -> int:
         """
+        Retrieves the index of the left child based on the given index
 
-        :param index:
-        :return:
+        :param index: the index of the parent node
+        :return: an int representing the index of the left child
         """
         if 2 * index + 1 < len(self.data):
             return 2 * index + 1
 
     def get_right_child_index(self, index: int) -> int:
         """
+        Retrieves the index of the right child based on the given index
 
-        :param index:
-        :return:
+        :param index: the index of the parent node
+        :return: an int representing the index of the right child
         """
         if 2 * index + 2 < len(self.data):
             return 2 * index + 2
 
     def get_parent_index(self, index: int) -> int:
         """
+        Retrieves the index of the parents node based on the given index
 
-        :param index:
-        :return:
+        :param index: the index of the parent node
+        :return: an int representing the index of the parent child
         """
         if (index - 1) // 2 >= 0:
             return (index - 1) // 2
 
     def get_min_child_index(self, index: int) -> int:
         """
+        Computes the index of the child with the lower value
 
-        :param index:
-        :return:
+        :param index: the index of the parent
+        :return: an int w/ the min value child's index, None if no children
         """
         if not self.empty():
             lc = self.get_left_child_index(index)
@@ -138,9 +145,10 @@ class MinHeap:
 
     def percolate_up(self, index: int) -> None:
         """
+        Percolates up the value at index to its valid spot in the heap
 
-        :param index:
-        :return:
+        :param index: the index of the node to be percolated
+        :return: None
         """
         if index > 0:
             par = self.get_parent_index(index)
@@ -150,9 +158,10 @@ class MinHeap:
 
     def percolate_down(self, index: int) -> None:
         """
+        Percolates down the value at index to its valid spot in the heap
 
-        :param index:
-        :return:
+        :param index: the index of the node to be percolated
+        :return: None
         """
         lc = self.get_left_child_index(index)
         rc = self.get_right_child_index(index)
@@ -167,9 +176,10 @@ class MinHeap:
 
     def push(self, val: T) -> None:
         """
+        Pushed the value to the heap and moves to proper position
 
-        :param val:
-        :return:
+        :param val: the object to be added to the min heap
+        :return: None
         """
         end = len(self.data)
         self.data.append(val)
@@ -177,8 +187,9 @@ class MinHeap:
 
     def pop(self) -> T:
         """
+        Removes the top el from the heap, restores items to valid position
 
-        :return:
+        :return: The value that was popped
         """
         if not self.empty():
             val = self.data[0]
@@ -247,23 +258,29 @@ class MaxHeap:
 
     def push(self, key: int) -> None:
         """
+        Pushed the value to the heap
 
-        :param key:
-        :return:
+        :param key: the value to be added to the heap
+        :return: None
         """
         return self.data.push(-1 * key)
 
     def pop(self) -> int:
         """
+        Removes the top element from the heap
 
-        :return:
+        :return: The value that was popped
         """
         return -1 * self.data.pop()
 
 
 def get_eating_times(values: List[List[List[int]]]) -> List[List[int]]:
     """
-    INSERT DOCSTRING HERE
+    Takes in a list of interval lists such that each sublist returns a list of
+    finite-length intervals that do not overlap with any of the given intervals
+
+    :param values: List of interval lists
+    :return: a list of non overlapping intervals
     """
     sol = []
     if len(values) > 0:
@@ -275,11 +292,11 @@ def get_eating_times(values: List[List[List[int]]]) -> List[List[int]]:
         stack = []
         stack.append(min_heap.pop())
         while not min_heap.empty():
-            i = min_heap.pop()
-            if stack[-1][0] <= i[0] <= stack[-1][-1]:
-                stack[-1][-1] = max(stack[-1][-1], i[-1])
+            val = min_heap.pop()
+            if stack[-1][0] <= val[0] <= stack[-1][-1]:
+                stack[-1][-1] = max(stack[-1][-1], val[-1])
             else:
-                stack.append(i)
+                stack.append(val)
 
         i = 0
         while i < len(stack) - 1:
