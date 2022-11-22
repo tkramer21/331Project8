@@ -261,6 +261,32 @@ def get_eating_times(values: List[List[List[int]]]) -> List[List[int]]:
     """
     INSERT DOCSTRING HERE
     """
+    sol = []
+    if len(values) > 0:
+        min_heap = MinHeap()
+        for memb in values:
+            for sub in memb:
+                min_heap.push(sub)
+
+        stack = []
+        stack.append(min_heap.pop())
+        while not min_heap.empty():
+            i = min_heap.pop()
+            if stack[-1][0] <= i[0] <= stack[-1][-1]:
+                stack[-1][-1] = max(stack[-1][-1], i[-1])
+            else:
+                stack.append(i)
+
+        i = 0
+        while i < len(stack) - 1:
+            if stack[i][1] < stack[i + 1][0]:
+                sol.append([stack[i][1], stack[i + 1][0]])
+            i += 1
+
+    return sol
+
+
+"""
     vic = []
     sol = []
     i = 0
@@ -300,7 +326,7 @@ def get_eating_times(values: List[List[List[int]]]) -> List[List[int]]:
             i += 1
 
     return sol
-
+"""
 
 """                if values[i][j][1] >= values[i][j + 1][1]: # if the second time interval is 
                     temp = [values[i][j][0], values[i][j][1]]"""
